@@ -8,12 +8,12 @@
 2. Storm和Hadoop的差异
     前者是流处理，后者是批处理
     
-3. 安装JDK/Maven/Storm（略）
+3. 安装JDK/Maven/Storm, 参考[在本地单机部署Hadoop/Storm运行环境](http://unixera.com/java/deploy-pseudo-distributed-mode-hadoop/)
 
 4. 关键概念介绍
 
     - Topology
-        完成一项工作的业务逻辑的集合
+        完成一项作业的业务逻辑的集合
     - Spout
         数据流的输入端
     - Bolt
@@ -22,14 +22,10 @@
         数据在Storm中流动所使用的格式
     - 两种运行模式
     
-        - 本地模式
+        - 本地模式（个人感觉不太实用）
         - 生产环境
-        
-5. 从零创建一个Storm的简单应用WordCount
 
-6. StormUI的简单用法
-
-7. 演示一个稍微复杂些的应用
+5. 演示一个实际的Storm应用
 
     - LogStash从前端机拉取日志 （运维负责，略）
     - LogStash把日志推到Kafka（运维负责，略）
@@ -38,4 +34,6 @@
     - 将处理完成的数据写入到HDFS中
     - 当前版本（0.10.0）的Storm无法使用分块，将新版本（2.0.0-SNAPSHOT）支持的功能backport到当前版本
     
-8. FAQ
+6. 应用参数调优
+
+7. FAQ
