@@ -1,7 +1,6 @@
 package com.unixera.storm;
 
 import backtype.storm.Config;
-import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.AuthorizationException;
@@ -53,7 +52,7 @@ public class LogStatisticsTopology {
         topologyBuilder.setSpout(KAFKA_SPOUT_ID, kafkaSpout, 10);
         topologyBuilder.setBolt(CROP_BOLT_ID, new CropBolt(), 10).shuffleGrouping(KAFKA_SPOUT_ID);
         topologyBuilder.setBolt(SPLIT_FIELDS_BOLT_ID, new SplitFieldsBolt(), 10).shuffleGrouping(CROP_BOLT_ID);
-        topologyBuilder.setBolt(STORM_HDFS_BOLT_ID, hdfsBolt, 10).fieldsGrouping(SPLIT_FIELDS_BOLT_ID, new Fields("timestamp", "fieldvalues"));
+        topologyBuilder.setBolt(STORM_HDFS_BOLT_ID, hdfsBolt, 4).fieldsGrouping(SPLIT_FIELDS_BOLT_ID, new Fields("timestamp", "fieldvalues"));
 
         if (args != null && args.length > 0) {
             config.setDebug(false);
@@ -104,7 +103,6 @@ public class LogStatisticsTopology {
         kafkaSpoutConfig.bufferSizeBytes = 1024 * 1024 * 4;
         kafkaSpoutConfig.fetchSizeBytes = 1024 * 1024 * 4;
         kafkaSpoutConfig.scheme = new SchemeAsMultiScheme(new StringScheme());
-        kafkaSpoutConfig.startOffsetTime = kafka.api.OffsetRequest.EarliestTime();
 
         return new KafkaSpout(kafkaSpoutConfig);
     }
